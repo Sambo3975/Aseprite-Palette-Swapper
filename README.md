@@ -1,5 +1,5 @@
 # Aseprite-Palette-Swapper
-Aseprite plugin for converting sprites to/from the coloring used by the palette swap shaders we use in Mr. Stretch. However, the plugin may still be useful in other applications.
+This is an Aseprite plugin for converting sprites to/from the coloring used by the palette swap shaders we use in [Mr. Stretch](https://store.steampowered.com/app/2258130/Mr_Stretch_and_the_Stolen_Fortune/). However, the plugin may still be useful in other applications.
 
 This plugin uses color palettes with multiple rows. All pixels with colors matching one row can be replaced with pixels from another. You can switch between palettes, or to and from one of the 13 "color channels" that are used by our Fast Palette Swap System (FPSS) written for Unity. Currently, the palette swap(s) is/are applied to all cels contained in the sprite. More fine-grained control may be added later if needed.
 
@@ -9,7 +9,7 @@ A download can be found on the [Releases](https://github.com/Sambo3975/Aseprite-
 
 ### Method 1 (Windows/Mac)
 
-1. Download `.aseprite-extension` file.
+1. Download the `.aseprite-extension` file.
 2. Double-click the file to automatically install it to Aseprite.
 
 ### Method 2 (Windows/Mac/Linux)

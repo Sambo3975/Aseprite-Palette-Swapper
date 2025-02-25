@@ -182,6 +182,7 @@ local function applyPaletteSwaps(dlg)
                 ui = false,
                 from = fromPalette:getPixel(x1, y1),
                 to = toPalette:getPixel(x2, y2),
+                tolerance = thisPlugin.preferences.tolerance,
               }
             end
           else
@@ -191,6 +192,7 @@ local function applyPaletteSwaps(dlg)
                 ui = false,
                 from = fromPalette:getPixel(x1, y1),
                 to = toPalette:getPixel(x2, y2),
+                tolerance = thisPlugin.preferences.tolerance,
               }
             end
           end
@@ -263,6 +265,15 @@ local function drawDialog(plugin)
   }:entry{
     id = "swapToRows",
     label = "  To Row(s)",
+  }:slider{
+    id = "tolerance",
+    label = "  Tolerance",
+    min = 0,
+    max = 255,
+    value = plugin.preferences.tolerance,
+    onrelease = function()
+      plugin.preferences.tolerance = dlg.data.tolerance
+    end
   }:separator{
   }:button{
     id = "applyButton",
@@ -292,6 +303,9 @@ function init(plugin)
   end
   if plugin.preferences.toPalette == nil then
     plugin.preferences.toPalette = ""
+  end
+  if plugin.preferences.tolerance == nil then
+    plugin.preferences.tolerance = 0
   end
 
   thisPlugin = plugin

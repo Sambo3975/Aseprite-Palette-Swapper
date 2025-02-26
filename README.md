@@ -26,7 +26,7 @@ Once the plugin has been installed, it can be accessed in Aseprite as a menu opt
 
 When you select this plugin from the menu, you should see the following:
 
-![Imgur](https://imgur.com/hHYp9a7.png)
+![Imgur](https://imgur.com/a/H7ECAwh.png)
 
 An explanation of each field can be found below.
 
@@ -67,6 +67,10 @@ __Performance note:__ Switching directly between rows in `<<color channel>>` is 
 Row index(es) to switch to. Must be a single number or a space-separated list of numbers (e.g. `1 2 3`) that are in the range `[0 - (h-1)]` where `h` is the number of rows in `To Palette`. Inputs that don't meet these requirements will result in an error when trying to apply the palette swap(s).
 
 Additionally, `From Row(s)` and `To Row(s)` must have the same row count, or you will get an error when trying to apply the palette swap(s).
+
+### Tolerance
+
+Tolerance to use when finding colors to replace (0-255).
 
 ### Apply Palette Swap(s)
 

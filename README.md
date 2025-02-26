@@ -26,7 +26,7 @@ Once the plugin has been installed, it can be accessed in Aseprite as a menu opt
 
 When you select this plugin from the menu, you should see the following:
 
-![Imgur](https://imgur.com/a/H7ECAwh.png)
+![Imgur](https://imgur.com/QTXBZQj.png)
 
 An explanation of each field can be found below.
 

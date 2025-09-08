@@ -13,13 +13,14 @@ local thisPlugin
 local usingColorChannel = false
 
 --- Get a list of all palettes at palettePath
---@tparam string palettePath
-local function listPalettes(palettePath)
+--@tparam string palettePath : Path where palette images are located
+--@tparam bool listMatchFromPalette : [default=false] If true, the <<match From Palette>> option is included.
+local function listPalettes(palettePath, listMatchFromPalette)
   local files = app.fs.listFiles(palettePath)
-  local result = {
-    "<<color channel>>",
-    "<<match From Palette>>",
-  }
+  local result = { "<<color channel>>", }
+  if listMatchFromPalette then
+    table.insert(result, "<<match From Palette>>")
+  end
   for _,v in ipairs(files) do
     if v:match("png$") then
       table.insert(result, v:sub(1, -5))
@@ -211,8 +212,8 @@ local function applyPaletteSwaps(dlg)
 end
 
 local function drawDialog(plugin)
-  paletteOptions = listPalettes(plugin.preferences.palettePath)
   dlg = Dialog("Palette Swap Tool")
+  local enableControls = plugin.preferences.palettePath ~= ""
   dlg:file{
     id = "palettePath",
     label = "Palette Path",
@@ -247,24 +248,28 @@ local function drawDialog(plugin)
     id = "swapFromPalette",
     label = "  From Palette",
     option = plugin.preferences.fromPalette,
-    options = paletteOptions,
+    options = listPalettes(plugin.preferences.palettePath),
     onchange = function()
       plugin.preferences.fromPalette = dlg.data.swapFromPalette
-    end
+    end,
+    enabled = enableControls,
   }:entry{
     id = "swapFromRows",
     label = "  From Row(s)",
+    enabled = enableControls,
   }:combobox{
     id = "swapToPalette",
     label = "  To Palette",
     option = plugin.preferences.toPalette,
-    options = paletteOptions,
+    options = listPalettes(plugin.preferences.palettePath, true),
     onchange = function()
       plugin.preferences.toPalette = dlg.data.swapToPalette
-    end
+    end,
+    enabled = enableControls,
   }:entry{
     id = "swapToRows",
     label = "  To Row(s)",
+    enabled = enableControls,
   }:slider{
     id = "tolerance",
     label = "  Tolerance",
@@ -273,7 +278,8 @@ local function drawDialog(plugin)
     value = plugin.preferences.tolerance,
     onrelease = function()
       plugin.preferences.tolerance = dlg.data.tolerance
-    end
+    end,
+    enabled = enableControls,
   }:separator{
   }:button{
     id = "applyButton",
@@ -281,6 +287,7 @@ local function drawDialog(plugin)
     onclick = function()
       applyPaletteSwaps(dlg)
     end,
+    enabled = enableControls,
   }:show{
     wait = false,
     bounds = plugin.preferences.dialogBounds,

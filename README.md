@@ -40,6 +40,8 @@ When you click on this, a file dialog will appear for you to select an image in 
 
 This was intended to be a *folder* selection dialog, but Aseprite doesn't support those as of the time this was written.
 
+The controls in the Palette Swap(s) section are not enabled until a Palette Path is selected.
+
 ### Check Palette Widths
 
 If checked, you will be warned when trying to switch between palettes with different widths (different color counts per row). Switching in this way is supported, but it will have results that are possibly undesired, such as colors that were different becoming the same color, or not all colors on the new palette row being used. A warning will never appear when switching to or from a `<<color channel>>` palette, as these palettes are designed to work with palettes of any width.
@@ -50,7 +52,7 @@ If checked, the dialog will be automatically closed after palettes are successfu
 
 ### From Palette
 
-Name of the palette to switch from. Set this to `<<color channel>>` to switch from an FPSS color channel. Do not set this to `<<match From Palette>>` as this will result in an error when trying to apply the palette swap(s).
+Name of the palette to switch from. Set this to `<<color channel>>` to switch from an FPSS color channel.
 
 ### From Row(s)
 

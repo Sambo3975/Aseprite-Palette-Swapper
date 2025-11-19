@@ -61,6 +61,8 @@ end
 -- @tparam Dialog dlg : Palette Swap Tool dialog.
 local function applyPaletteSwaps(dlg)
 
+  -- local log = {}
+
   thisPlugin.preferences.dialogBounds = dlg.bounds
 
   -- Input Validation
@@ -167,9 +169,11 @@ local function applyPaletteSwaps(dlg)
 
   -- Do the palette swap
 
-  app.transaction(
-    "Palette swap",
-    function()
+  -- app.transaction(
+  --   "Palette swap",
+  --   function()
+      -- log[#log+1] = "stepOverToPalette: "..tostring(stepOverToPalette)
+      -- log[#log+1] = "tolerance: "..tostring(thisPlugin.preferences.tolerance)
       local cel = app.cel
       for _,v in ipairs(app.sprite.cels) do
         app.cel = v
@@ -179,20 +183,26 @@ local function applyPaletteSwaps(dlg)
           if stepOverToPalette then
             for x2 = 0, toPalette.width - 1 do
               local x1 = math.floor(x2 * xScale + 0.5)
+              local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
+              local p2 = string.format("%x", toPalette:getPixel(x2, y2))
+              -- log[#log+1] = "replacing color ("..p1..") at ("..x1..", "..y1..") with color ("..p2..") at ("..x2..", "..y2..")"
               app.command.ReplaceColor{
                 ui = false,
-                from = fromPalette:getPixel(x1, y1),
-                to = toPalette:getPixel(x2, y2),
+                from = Color(fromPalette:getPixel(x1, y1)),
+                to = Color(toPalette:getPixel(x2, y2)),
                 tolerance = thisPlugin.preferences.tolerance,
               }
             end
           else
             for x1 = 0, fromPalette.width - 1 do
               local x2 = math.floor(x1 * xScale + 0.5)
+              local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
+              local p2 = string.format("%x", toPalette:getPixel(x2, y2))
+              -- log[#log+1] = "replacing color ("..p1..") at ("..x1..", "..y1..") with color ("..p2..") at ("..x2..", "..y2..")"
               app.command.ReplaceColor{
                 ui = false,
-                from = fromPalette:getPixel(x1, y1),
-                to = toPalette:getPixel(x2, y2),
+                from = Color(fromPalette:getPixel(x1, y1)),
+                to = Color(toPalette:getPixel(x2, y2)),
                 tolerance = thisPlugin.preferences.tolerance,
               }
             end
@@ -200,14 +210,19 @@ local function applyPaletteSwaps(dlg)
         end
       end
       app.cel = cel
-    end
-  )
+  --   end
+  -- )
 
   if dlg.data.closeOnSuccess then
     dlg:close()
   end
 
   app.refresh()
+
+  -- app.alert{
+  --   title = "Palette Swap Success",
+  --   text = log,
+  -- }
 
 end
 

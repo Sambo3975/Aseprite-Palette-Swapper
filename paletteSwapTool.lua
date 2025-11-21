@@ -61,8 +61,6 @@ end
 -- @tparam Dialog dlg : Palette Swap Tool dialog.
 local function applyPaletteSwaps(dlg)
 
-  -- local log = {}
-
   thisPlugin.preferences.dialogBounds = dlg.bounds
 
   -- Input Validation
@@ -169,11 +167,12 @@ local function applyPaletteSwaps(dlg)
 
   -- Do the palette swap
 
+  -- The transaction had to be removed because due to a bug in Aseprite 1.3.15.5, ReplaceColor only works once per 
+  -- transaction.
+
   -- app.transaction(
   --   "Palette swap",
   --   function()
-      -- log[#log+1] = "stepOverToPalette: "..tostring(stepOverToPalette)
-      -- log[#log+1] = "tolerance: "..tostring(thisPlugin.preferences.tolerance)
       local cel = app.cel
       for _,v in ipairs(app.sprite.cels) do
         app.cel = v
@@ -185,7 +184,6 @@ local function applyPaletteSwaps(dlg)
               local x1 = math.floor(x2 * xScale + 0.5)
               local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
               local p2 = string.format("%x", toPalette:getPixel(x2, y2))
-              -- log[#log+1] = "replacing color ("..p1..") at ("..x1..", "..y1..") with color ("..p2..") at ("..x2..", "..y2..")"
               app.command.ReplaceColor{
                 ui = false,
                 from = Color(fromPalette:getPixel(x1, y1)),
@@ -198,7 +196,6 @@ local function applyPaletteSwaps(dlg)
               local x2 = math.floor(x1 * xScale + 0.5)
               local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
               local p2 = string.format("%x", toPalette:getPixel(x2, y2))
-              -- log[#log+1] = "replacing color ("..p1..") at ("..x1..", "..y1..") with color ("..p2..") at ("..x2..", "..y2..")"
               app.command.ReplaceColor{
                 ui = false,
                 from = Color(fromPalette:getPixel(x1, y1)),
@@ -218,11 +215,6 @@ local function applyPaletteSwaps(dlg)
   end
 
   app.refresh()
-
-  -- app.alert{
-  --   title = "Palette Swap Success",
-  --   text = log,
-  -- }
 
 end
 

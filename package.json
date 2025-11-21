@@ -2,7 +2,7 @@
   "name": "paletteSwapTool",
   "displayName": "Muketronics Palette Swap Tool",
   "description": "Tool for managing sprites that are designed to work with our Fast Palette Swap shaders.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": { "name": "Sam Knight",
               "email": "muketronics@outlook.com",
               "url": "https://muketronics.com/" },

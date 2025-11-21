@@ -83,3 +83,8 @@ Because this plugin must open multiple `.png` palette files stored on your machi
 ![Imgur](https://imgur.com/IcBWBsj.png)
 
 If you see this dialog, check `Give full trust to this script` and press the button on the left. The plugin will not make changes to any of your palette images and just loads them to get their color data. No images other than the selected palette images will be loaded. Always be sure to check unknown third-party scripts before executing them.
+
+## Known Issues
+
+The current version of this extension (1.0.3) creates a new entry on the undo stack for each color replacement. This is due to a bug in Aseprite that makes it so the ReplaceColor command only works once
+per transaction. Hopefully, the Aseprite devs will get around to fixing it sooner or later, and palette swapping can be brought back into a single transaction.

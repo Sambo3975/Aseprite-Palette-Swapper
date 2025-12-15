@@ -167,12 +167,9 @@ local function applyPaletteSwaps(dlg)
 
   -- Do the palette swap
 
-  -- The transaction had to be removed because due to a bug in Aseprite 1.3.15.5, ReplaceColor only works once per 
-  -- transaction.
-
-  -- app.transaction(
-  --   "Palette swap",
-  --   function()
+  app.transaction(
+    "Palette swap",
+    function()
       local cel = app.cel
       for _,v in ipairs(app.sprite.cels) do
         app.cel = v
@@ -182,8 +179,6 @@ local function applyPaletteSwaps(dlg)
           if stepOverToPalette then
             for x2 = 0, toPalette.width - 1 do
               local x1 = math.floor(x2 * xScale + 0.5)
-              local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
-              local p2 = string.format("%x", toPalette:getPixel(x2, y2))
               app.command.ReplaceColor{
                 ui = false,
                 from = Color(fromPalette:getPixel(x1, y1)),
@@ -194,8 +189,6 @@ local function applyPaletteSwaps(dlg)
           else
             for x1 = 0, fromPalette.width - 1 do
               local x2 = math.floor(x1 * xScale + 0.5)
-              local p1 = string.format("%x", fromPalette:getPixel(x1, y1))
-              local p2 = string.format("%x", toPalette:getPixel(x2, y2))
               app.command.ReplaceColor{
                 ui = false,
                 from = Color(fromPalette:getPixel(x1, y1)),
@@ -207,8 +200,8 @@ local function applyPaletteSwaps(dlg)
         end
       end
       app.cel = cel
-  --   end
-  -- )
+    end
+  )
 
   if dlg.data.closeOnSuccess then
     dlg:close()
